@@ -65,6 +65,12 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  const [isAscending, setIsAscending] = useState(true);
+
+  const toggleSortOrder = () => {
+    setIsAscending(!isAscending);
+  };
+
   const moves =  history.slice(0, history.length -1).map((squares, move) => {
     let description;
     if (move > 0) {
@@ -77,7 +83,8 @@ export default function Game() {
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     );
-  });
+  })
+  .sort((a, b) => (isAscending ? a.key - b.key : b.key - a. key));
 
   return (
     <div className="game">
@@ -87,6 +94,11 @@ export default function Game() {
       <div className="game-info">
         You are at move #{currentMove}
         <ol>{moves}</ol>
+        <button onClick={toggleSortOrder}>
+          Toggle Sort Order: {isAscending ? 'Ascending' : 'Descending'}
+        </button>
+      </div>
+      <div>
       </div>
     </div>
 );
